@@ -250,6 +250,7 @@ cloudmonkey create storagepool zoneid=${ZoneID} podid=${PodID} clusterid=${Clust
 {% endfor %}
 {% endif %}
 
+{% if not use_s3 %}
 WriteOutput "Adding Secondary Storage Pool"
 {% for pool in env_secpools %}
 {% if env_numversion | float > 4.2 %}
@@ -258,6 +259,17 @@ cloudmonkey add imagestore name='{{ pool }}' provider='NFS' zoneid=${ZoneID} url
 cloudmonkey add secondarystorage zoneid=${ZoneID} url="NFS://{% if groups['secondary_storage_hosts'] | length | int > 0 %}{{ hostvars[groups['secondary_storage_hosts'][0]]['ansible_ssh_host'] }}{% else %}UNDEFINED{% endif %}{{ env_secpath }}{{ env_name_clean }}/{{ pool }}" | tee -i -a ${DEPLOYLOG};
 {% endif %}
 {% endfor %}
+{% endif %}
+
+{% if use_s3 %}
+WriteOutput "Adding Secondary Storage Staging Pool"
+create secondarystagingstore provider=NFS zoneid=${ZoneID} url="NFS://{% if groups['secondary_storage_hosts'] | length | int > 0 %}{{ hostvars[groups['secondary_storage_hosts'][0]]['ansible_ssh_host'] }}{% else %}UNDEFINED{% endif %}{{ env_secpath }}{{ env_name_clean }}/{{ env_secpools[0] }}" | tee -i -a ${DEPLOYLOG};
+WriteOutput "Adding S3 Pool"
+add imagestore name="{{ s3bucket }}" provider=S3 accesskey="{{ s3accesskey }}" secretkey="{{ s3secretkey }}" bucket="s3bucket" usehttps=false endpoint="{{ s3endpoint }}" | tee -i -a ${DEPLOYLOG};
+
+{% endif %}
+
+
 
 WriteOutput "Enabling zone."
 cloudmonkey update zone allocationstate='Enabled' id=${ZoneID} | tee -i -a ${DEPLOYLOG};

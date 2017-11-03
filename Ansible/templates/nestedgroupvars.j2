@@ -375,7 +375,8 @@ hipchat_cli_client_version: "{{ hipchat_cli_client_version | default ( def_hipch
 
 
 # S3 Configuration
+use_s3: "{{ use_s3 | default( def_use_s3 ) }}"
 s3endpoint: "{{ s3endpoint | default( def_env_s3endpoint ) }}"
-s3bucket: "{{ def_env_s3bucket_prefix }}-env_name_clean"
 s3accesskey: "{{ s3accesskey | default( def_env_s3accesskey ) }}"
 s3secretkey: "{{ s3secretkey | default( def_env_s3secretkey ) }}"
+s3bucket: "{{ s3bucket_prefix | default( def_env_s3bucket_prefix) }}{{ 9999 |random}}"
