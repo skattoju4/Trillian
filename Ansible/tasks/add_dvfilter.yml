@@ -41,6 +41,7 @@
   with_items:
     - "{{ groups['vc_hosts'] }}"
     - "{{ groups['marvin_host'] }}"
+  when: (additional_zone|bool == False) and (additional_pod|bool == False)
   tags:
     - add_dvfilter
 
