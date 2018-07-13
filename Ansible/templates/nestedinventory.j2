@@ -70,8 +70,12 @@ secondary_cs_manager
 {% endif %}
 
 [vc_hosts]
-{% if vmware_ver | lower != "na" and not (additional_pod | bool) %}
+{% if vmware_ver | lower != "na" %}
+{% if (additional_zone | bool) or (additional_pod | bool) %}
+{{ env_name_clean }}-vc1 ansible_ssh_host={{ vcenter_ip }}
+{% else %}
 {{ env_name_clean }}-vc1 ansible_ssh_host={{ env_name_clean }}-vc1-ip instance_name={{ env_name_clean }}-vc1-instance_name
+{% endif %}
 {% endif %}
 
 [esxi_hosts]
