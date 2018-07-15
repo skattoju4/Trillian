@@ -15,7 +15,7 @@
 #limitations under the License.
 
 - name: wait for VM to be alive
-  local_action: command "/bin/ping {{ ansible_ssh_host }} -c 1"
+  local_action: command "ping {{ ansible_ssh_host }} -c 1"
   register: pong
   until: pong.rc == 0
   retries: "{{ ssh_retries }}"
