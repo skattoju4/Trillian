@@ -26,7 +26,7 @@
 - name: Wait until can login
   raw: time
   register: datetime
-  until: "Unable" not in datetime.stout
+  until: '"Unable" not in datetime.stout'
   retries: "{{ ssh_retries }}"
 
 - name: enable vMotion on VMKernel
