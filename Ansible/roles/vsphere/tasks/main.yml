@@ -20,8 +20,14 @@
   until: pong.rc == 0
   retries: "{{ ssh_retries }}"
 
-- name: Wait for SSH
-  local_action: wait_for port=22 host="{{ ansible_ssh_host }}" timeout={{ ssh_retries }} connect_timeout=5
+#- name: Wait for SSH
+#  local_action: wait_for port=22 host="{{ ansible_ssh_host }}" timeout={{ ssh_retries }} connect_timeout=5
+
+- name: Wait until can login
+  raw: time
+  register: datetime
+  until: '*Failed* not in datetime.stout'
+  retries: "{{ ssh_retries }}"
 
 - name: enable vMotion on VMKernel
   raw: vim-cmd hostsvc/vmotion/vnic_set vmk0
