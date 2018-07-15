@@ -28,6 +28,7 @@
   register: datetime
   until: '"Unable" not in datetime.stdout'
   retries: "{{ ssh_retries }}"
+  ignore_errors: true
 
 - name: enable vMotion on VMKernel
   raw: vim-cmd hostsvc/vmotion/vnic_set vmk0
