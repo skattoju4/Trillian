@@ -1,4 +1,4 @@
----
+ ---
 
 #Copyright 2016 ShapeBlue
 #
@@ -13,6 +13,12 @@
 #WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #See the License for the specific language governing permissions and
 #limitations under the License.
+
+- name: wait for VM to be alive
+  shell: "ping {{ ansible_ssh_host }} -c 1"
+  register: pong
+  until: pong.rc == 0
+  retries: "{{ ssh_retries }}"
 
 - name: Wait for SSH
   local_action: wait_for port=22 host="{{ ansible_ssh_host }}" timeout={{ ssh_retries }} connect_timeout=5
@@ -31,7 +37,7 @@
   ignore_errors: true
   when: not esxi_use_dvswitch
 
-- name: make nic active (raw used for pre 6.0 compatibility)
+- name: make nic active (raw used for pre 6.0 compatibility) 
   raw: esxcli network vswitch standard policy failover set --vswitch-name=vSwitch1 --active-uplinks=vmnic1
   ignore_errors: true
   when: not esxi_use_dvswitch
