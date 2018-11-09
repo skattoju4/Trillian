@@ -49,14 +49,6 @@
 - name: install setuptools version 36.8.0 for centos6 compatibility
   shell: pip install setuptools==36.8.0
   when: ansible_distribution_major_version == "6"
-
-- name: install urllib3 version 1.23 for centos6 compatibility
-  shell: pip install urllib3==1.23
-  when: ansible_distribution_major_version == "6"
-  
-- name: install requests version 2.19.1 for centos6 compatibility
-  shell: pip install requests==2.19.1
-  when: ansible_distribution_major_version == "6"
   
 - name: install setuptools for centos 7
   pip:
@@ -71,6 +63,14 @@
 
 - name: ensure cm config is removed
   file: path=/root/.cloudmonkey/config state=absent
+
+- name: install urllib3 version 1.23 for centos6 compatibility
+  shell: pip install urllib3==1.23
+  when: ansible_distribution_major_version == "6"
+  
+- name: install requests version 2.19.1 for centos6 compatibility
+  shell: pip install requests==2.19.1
+  when: ansible_distribution_major_version == "6"
 
 - name: install cloudmonkey
   pip: 
