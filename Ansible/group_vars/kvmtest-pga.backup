@@ -1,0 +1,256 @@
+---
+
+#Copyright 2016 ShapeBlue
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
+
+
+
+# Environment vars
+marvin_network: "sharedmgmt"
+management_network: "sharedmgmt"
+guest_public_network: "sharedpublic"
+management_vm_hypervisor: "VMware"
+build_project: "kvmtest-pga-NestedClouds"
+build_zone: "vmwarezone"
+build_keyboard: "us"
+ssh_retries: 1000
+env_timezone: "UTC"
+use_external_hv_hosts: "False"
+use_dvfilter: True
+use_phys_hosts: False
+setshortname: False
+use_custom_allocator: True
+use_firewalld: False
+
+# Environment database settings
+env_db_name: "trillian_envs"
+env_db_ip: "172.30.8.12"
+env_db_user: "root"
+env_db_password: "root123"
+
+
+# Environment summary
+env_uuid: "72184fef-19cf-41ae-8b7e-0bca7d602d95"
+additional_zone: False
+additional_pod: False
+existing_zone: "NA"
+region_mgmt_ip: "NA"
+vcenter_ip:  "NA"
+env_name_clean: "kvmtest-pga"
+env_ssh_key_path: /root/.ssh/trillian/test
+# -- this is old version b4 dotted notation of version
+env_version: "cs411"
+env_cs_distribution: "cs"
+env_numversion: "4.11"
+env_cs_minor_version_string: "cs411"
+env_repo_version_var:  "4.11"
+
+env_num_pods: 1
+env_num_zones: 1
+env_mgmtos: "centos7"
+env_comment: "kvmtest-pga"
+env_user: "admin"
+env_accounts: "admin,baremetal-system-account"
+env_zonetype:  "Advanced"
+env_hv: "kvm"
+env_prihost: "172.30.8.11"
+env_prihost_iscsi: "<IP_ADDRESS_HERE>"
+env_sechost: "172.30.8.11"
+env_pripath: "/secondary/trillian/primary"
+env_pripath_iscsi: "/iscsiroot/"
+env_iscsilunsize: "150G"
+env_iscsi_target: "<IQN_HERE>"
+env_secpath: "/secondary/trillian/secondary"
+pri_password: "root123"
+pri_password_iscsi: "root123"
+sec_password: "root123"
+env_priprot: "nfs"
+env_pripools:
+  - kvmtest-pga-kvm-pri1
+env_pripoolsmarvin:
+  - marvin_pri1
+  - nfs2
+env_secpools:
+  - kvmtest-pga-sec1
+env_zone_secgroups: "false"
+env_zone_guestcidr: "10.0.1.1/24"
+env_zone_dns1: "8.8.8.8"
+env_zone_dns2: "8.8.8.8"
+env_zone_intdns1: "8.8.8.8"
+env_zone_intdns2: "8.8.8.8"
+env_zone_localstorage: "false"
+env_zone_podname: "Pod1"
+env_zone_clustername: "p1-c1"
+env_zone_addhosts: "true"
+
+env_zone_systemplate_str:
+  - "-u <KVM_URL_HERE> -h kvm -F"
+
+
+wait_till_setup: False
+build_marvin: False
+wait_for_template: no
+force_java: no
+use_local_templates: True
+env_iscsi_test_target: "iqn.2016-10.local.marvin:tgt1/0"
+env_iscsi_test_host: "marvin"
+use_local_storage: False
+use_shared_storage: True
+use_local_storage_systemvms: False
+local_storage_disk_offering: "Custom"
+local_storage_disk_size: "80"
+
+
+# Management server
+mgmtsrv_service_offering: "Mgmt Server"
+mgmtsrv_template: "CentOS 7"
+mgmtsrv_username: "root"
+mgmtsrv_password: "password"
+use_custom_browser_title: True
+
+cloudstack_management_package: "cloudstack-management"
+
+
+baseurl_mgmt_suffix: "centos7/"
+baseurl_cloudstack: "http://packages.shapeblue.com/cloudstack/upstream/centos7/4.11"
+
+create_zone: yes
+ccp_install_tarball: na
+mgmt_java_ver: "java-1.8.0-openjdk"
+mgmt_java_path: "jre_1.8.0_openjdk"
+
+# DB servers
+dbsrv_service_offering: "Mgmt Server"
+dbsrv_template: "CentOS 7"
+dbsrv_username: "root"
+dbsrv_password: "root123"
+mysql_cloud_password: "cloud"
+mysql_root_password: "root123"
+mysql_replication_password: "root123"
+old_mysql_root_password: "root123"
+db_type: "mysql"
+mysql_max_connections: "700"
+mysql_innodb_buffer_pool_size: "256M"
+
+# KVM
+kvm_service_offering: "Nested Hypervisor"
+kvm_os: "centos7"
+baseurl_kvm_suffix: "centos7/"
+baseurl_kvm: "http://packages.shapeblue.com/cloudstack/upstream/centos7/4.11"
+cloudstack_agent_package: "cloudstack-agent"
+
+kvm_template: "CentOS 7"
+kvm_mgmt_network_label: "cloudbr0"
+kvm_guest_network_label: "cloudbr1"
+kvm_public_network_label: "cloudbr1"
+kvm_network_mode: "bridge"
+kvm_centos_ovsrpm: "http://mirror.centos.org/centos/7/os/x86_64/Packages/openvswitch-2.0.0-7.el7.x86_64.rpm"
+kvm_username: "root"
+kvm_password: "password"
+kvm_java_ver: "java-1.8.0-openjdk"
+kvm_java_path: "jre_1.8.0_openjdk"
+kvm_localstorage_mount: "/localstorage"
+phys_host_mgmt_if: "eth0"
+phys_host_trunked_if: "eth2"
+phys_host_PXE_if: "eth1"
+kvm_install_elrepo_kernel: False
+kvm_elrepo_kernel_version: "kernel-lt"
+
+# XS
+xs_ver: "na"
+xs_service_offering: "Nested Hypervisor"
+xs_template: "na"
+xs_mgmt_network_nic: "eth0"
+xs_mgmt_network_label: "Network0"
+xs_guest_network_nic: "eth1"
+xs_guest_network_label: "Network1"
+xs_public_network_nic: "eth1"
+xs_public_network_label: "Network1"
+xs_username: "root"
+xs_password: "root123"
+xs_license_server: "<IP_ADDRESS_HERE>"
+xs_license_server_port: "27000"
+xs_apply_license: False
+xs_license_edition: "enterprise-per-socket"
+
+# VMware
+vmware: "na"  ##-- LEGACY REMOVE SOONEST
+vmware_ver: "na"
+esxi_template: "na"
+vc_template: "na"
+esxi_service_offering: "Nested Hypervisor"
+vc_service_offering: "VC server"
+esxi_use_dvswitch: False
+esxi_use_mgmt_dvswitch: False
+esxi_mgmt_network_label: "vSwitch0"
+esxi_guest_network_label: "vSwitch1"
+esxi_public_network_label: "vSwitch1"
+esxi_mgmt_dvs_network_label: "dvSwitch0"
+esxi_guest_dvs_network_label: "dvSwitch1"
+esxi_public_dvs_network_label: "dvSwitch1"
+
+# VMware datacentre configuration
+vmware_vcsa_user: "administrator@vsphere.local"
+vmware_vcsa_pass: "Administrator1!"
+vmware_datacenter_name: "trillian_dc"
+vmware_esxi_username: "root"
+vmware_esxi_password: "test1234!"
+
+# Marvin server
+marvin_service_offering: "Marvin"
+marvin_server_template: "Marvin iSCSI"
+marvin_username: "admin"
+marvin_password: "password"
+marvin_tests_source: "github"
+marvin_tests_github_source: "https://github.com/apache/cloudstack"
+marvin_images_location: "http://<IP_ADDRESS_HERE>/marvin"
+openvm_images_location: "http://<IP_ADDRESS_HERE>/openvm"
+run_component_tests: False
+run_smoke_tests: False
+baseurl_marvin: "http://packages.shapeblue.com/cloudstack/upstream/centos7/4.11"
+fallback_marvin_test_repo: "http://<IP_ADDRESS_HERE>/shapeblue/cloudstack/testing/centos7/4.12.0/"
+fixtests: no
+force_marvin_fallback: no
+
+# SSL
+ssl_systemvm: "false"
+ssl_mgmt: "false"
+ssl_key: "<KEY_HERE>"
+ssl_cert: "<CERT_HERE>"
+ssl_rootcert: "<CERT_HERE>"
+systemvm_url: "<SYSTEMVM_URL_HERE>"
+ssl_keystore: "<KEYSTORE_HERE>"
+ssl_keystore_password: "<PASSWORD_HERE>"
+ssl_port: "8443"
+
+# Hipchat cli client
+use_hipchat: True
+hipchat_server: "<HIPCHAT_SERVER_URL>"
+hipchat_token: "<TOKEN_HERE>"
+hipchat_cli_client_location: "http://<IP_ADDRESS_HERE>/tools/atlassian-cli-7.1.0-distribution.zip"
+hipchat_cli_client_version: "7.1.0"
+
+# webhook client
+use_webhooks: False
+marvin_notifi_webhook_url: "<WEBHOOK_URL_HERE>"
+
+# slack client
+use_slack: True
+slackcli_url: "http://<IP_ADDRESS_HERE>/tools/slack-cli"
+slack_token: "<TOKEN_HERE>"
+slack_channel: "#testing"
+slack_username: "<USERNAME_HERE>"
+slack_icon_url: "<ICON_URL_HERE>"
+slack_color: "normal"
+slack_webhook: "<WEBHOOK_HERE>"

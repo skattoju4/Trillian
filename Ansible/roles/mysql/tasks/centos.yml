@@ -47,8 +47,8 @@
   tags: services
   when: ansible_distribution_major_version == "7"
 
-- name: Ridiculous fix for mysql permissions
-  file: path=/var/lib/mysql state=directory mode=0666
+#- name: Ridiculous fix for mysql permissions
+#  file: path=/var/lib/mysql state=directory mode=0666
 
 - name: replace MySQL my.cnf using Template (centos/rhel6)
   action: template src=my.cnf.j2 dest=/etc/my.cnf
@@ -66,7 +66,7 @@
   when: ansible_distribution_major_version == "6"
 
 - name: Ensure MySQL service is started and set to start on boot (centos/rhel7)
-  service: name=mariadb state=restarted enabled=yes
+  service: name=mariadb state=started enabled=yes
   tags: services
   when: ansible_distribution_major_version == "7"
 

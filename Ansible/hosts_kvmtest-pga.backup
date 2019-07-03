@@ -1,0 +1,76 @@
+#---
+
+#Copyright 2016 ShapeBlue
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing, software
+#distributed under the License is distributed on an "AS IS" BASIS,
+#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#See the License for the specific language governing permissions and
+#limitations under the License.
+
+
+[kvmtest-pga:children]
+hypervisor_hosts
+local
+cloudstack_manager_hosts
+mysql_hosts
+vc_hosts
+storage_hosts
+marvin_host
+
+[local]
+localhost ansible_connection=local
+
+[hypervisor_hosts:children]
+xenserver_hosts
+kvm_hosts
+esxi_hosts
+
+[mysql_hosts:children]
+mysql_master_host
+mysql_slave_hosts
+
+[cloudstack_manager_hosts:children]
+primary_cs_manager
+secondary_cs_manager
+
+
+[primary_cs_manager]
+kvmtest-pga-mgmt1 ansible_ssh_host=kvmtest-pga-mgmt1-ip ansible_ssh_pass=password instance_name=kvmtest-pga-mgmt1-instance_name
+
+[secondary_cs_manager]
+
+[mysql_master_host]
+
+[mysql_slave_hosts]
+
+[vc_hosts]
+
+[esxi_hosts]
+
+[xenserver_hosts]
+
+[kvm_hosts]
+kvmtest-pga-kvm1 ansible_ssh_host=kvmtest-pga-kvm1-ip ansible_ssh_pass=password instance_name=kvmtest-pga-kvm1-instance_name
+
+[marvin_host]
+
+[storage_hosts:children]
+primary_storage_hosts
+primary_storage_hosts_iscsi
+secondary_storage_hosts
+
+[primary_storage_hosts]
+172.30.8.11 ansible_ssh_host=172.30.8.11 ansible_ssh_pass=root123
+
+[primary_storage_hosts_iscsi]
+<IP_ADDRESS_HERE> ansible_ssh_host=<IP_ADDRESS_HERE> ansible_ssh_pass=root123
+
+[secondary_storage_hosts]
+172.30.8.11 ansible_ssh_host=172.30.8.11 ansible_ssh_pass=root123
