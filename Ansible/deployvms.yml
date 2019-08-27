@@ -234,6 +234,12 @@
   roles:
     - cloudstack-config
 
+## enable promiscuous mode on all port groups
+
+- hosts: localhost
+  roles:
+    - vmware_promiscuous_mode
+
 ## update status
 
 - hosts: localhost

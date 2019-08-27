@@ -17,13 +17,13 @@ ZONEID=`echo $ARGS | tr " " "\n"| awk -F= '$1=="zoneid"{print $2}'| tr -d '"' | 
 
 function least_cluster()
 {
-  LOWESTCLUSTERID=`cloudmonkey list clustersmetrics | jq -r '.cluster | sort_by(.cpuused|rtrimstr("%")|tonumber) | .[0]|.id'`
+  LOWESTCLUSTERID=`cloudmonkey list clustersmetrics allocationstate=Enabled | jq -r '.cluster | sort_by(.cpuused|rtrimstr("%")|tonumber) | .[0]|.id'`
   LOWESTCLUSTERNAME=`cloudmonkey list clusters id=$LOWESTCLUSTERID | jq -r '.cluster[] | .name'`
 }
 
 function least_host()
 {
-  HOSTUSE=`cloudmonkey list hosts type=routing | jq '.host[]' | sed 's/\%//'`
+  HOSTUSE=`cloudmonkey list hosts type=routing resourcestate=Enabled | jq '.host[]' | sed 's/\%//'`
   LOWESTHOSTID=`echo $HOSTUSE | jq -r -s -c 'sort_by(.cpuused|tonumber) | .[0] | .id'`
   LOWESTCLUSTERID=`echo $HOSTUSE | jq -r -s -c 'sort_by(.cpuused|tonumber) | .[0] | .clusterid'`
   LOWESTHOSTNAME=`cloudmonkey list hosts id=$LOWESTHOSTID | jq -r '.host[] | .name'`

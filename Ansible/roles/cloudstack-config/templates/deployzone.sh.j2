@@ -153,7 +153,7 @@ then
   else
     WriteOutput "Configuring zone without security groups.";
     WriteOutput "Creating public range.";
-    cloudmonkey create vlaniprange zoneid=${ZoneID} vlan="{{ env_pubvlan }}" gateway="{{ env_pubgw }}" netmask="{{ env_pubmask }}" startip="{{ env_pubstartip }}" endip="{{ env_pubendip }}" forvirtualnetwork="true" | tee -i -a ${DEPLOYLOG};
+    cloudmonkey create vlaniprange zoneid=${ZoneID} gateway="{{ env_pubgw }}" netmask="{{ env_pubmask }}" startip="{{ env_pubstartip }}" endip="{{ env_pubendip }}" forvirtualnetwork="true" | tee -i -a ${DEPLOYLOG};
     WriteOutput "Creating Guest VLAN range."
     cloudmonkey update physicalnetwork id=${PhysNetGuestID} vlan="{{ env_podvlans }}" | tee -i -a ${DEPLOYLOG};
   fi
@@ -220,6 +220,12 @@ then
   then
     WriteOutput "Adding KVM hosts."
     {% for host in groups[ 'kvm_hosts'] %}
+    WriteOutput "transfer script to restart cloudstack-agent after 40s"
+    sshpass -p 'password' ssh -o StrictHostKeyChecking=no root@{{ hostvars[host]['ansible_ssh_host'] }} 'echo "sleep 40 && systemctl restart cloudstack-agent" > /tmp/restart_cloudstack_agent_after_40s.sh'
+    WriteOutput "set execution bit"
+    sshpass -p 'password' ssh -o StrictHostKeyChecking=no root@{{ hostvars[host]['ansible_ssh_host'] }} 'chmod +x /tmp/restart_cloudstack_agent_after_40s.sh'
+    WriteOutput "execute remote script and return"
+    sshpass -p 'password' ssh -o StrictHostKeyChecking=no root@{{ hostvars[host]['ansible_ssh_host'] }} '/tmp/restart_cloudstack_agent_after_40s.sh </dev/null > /tmp/restart_cloudstack_agent_after_40s.log 2>&1 &'
     WriteOutput "Adding KVM host {{ host }}.";
     cloudmonkey add host zoneid=${ZoneID} podid=${PodID} clusterid=${ClusterID_KVM} hypervisor='KVM' password="{{ kvm_password }}" username="{{ kvm_username }}" url="http://{{ hostvars[host]['ansible_ssh_host'] }}" | tee -i -a ${DEPLOYLOG};
     {% endfor %}

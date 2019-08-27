@@ -37,6 +37,7 @@ ENV_ZONETYPE=`echo $ARGS | tr " " "\n"| awk -F= '$1=="ENV_ZONETYPE"{print $2}'| 
 ENV_SECGROUPS=`echo $ARGS | tr " " "\n"| awk -F= '$1=="ENV_SECGROUPS"{print $2}'| tr -d '"' | sed -e 's/[[:space:]]*$//'`
 ENV_SECGROUPS_PARSED=`echo $ENV_SECGROUPS | grep -Ei 'yes|true'`
 
+export PGPASSWORD=${DBPASS}
 MYSQLCOMMAND="mysql -h${DBHOST} -u${DBUSER} -p${DBPASS} -s -N -e";
 
 ENVTBL="environments";

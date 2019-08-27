@@ -1,0 +1,26 @@
+- name: 'Gather portgroups from cluster'
+  vmware_portgroup_facts:
+    hostname: '{{ parent_vcenter_hostname }}'
+    username: '{{ parent_vcenter_username }}'
+    password: '{{ parent_vcenter_password }}'
+    cluster_name:  '{{ parent_vcenter_cluster }}'
+  delegate_to: localhost
+  register: portgroup_facts
+
+- debug: msg='{{ portgroup_facts }}'
+
+- name: 'Set promiscuous mode on portgroups'
+  vmware_portgroup:
+    hostname: '{{ parent_vcenter_hostname }}'
+    username: '{{ parent_vcenter_username }}'
+    password: '{{ parent_vcenter_password }}'
+    switch_name:  '{{ item.vswitch }}'
+    portgroup_name: '{{ item.portgroup}}'
+    vlan_id: '{{ item.vlan_id }}'
+    network_policy:
+      promiscuous_mode: True
+  delegate_to: localhost
+  with_items: '{{ portgroup_facts }}'
+  register: result
+
+- debug: msg='{{ result }}'

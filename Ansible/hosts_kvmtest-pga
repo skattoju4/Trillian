@@ -42,7 +42,7 @@ secondary_cs_manager
 
 
 [primary_cs_manager]
-kvmtest-pga-mgmt1 ansible_ssh_host=172.30.8.104 ansible_ssh_pass=password instance_name=i-10-476-VM
+kvmtest-pga-mgmt1 ansible_ssh_host=172.30.8.64 ansible_ssh_pass=password instance_name=i-51-579-VM
 
 [secondary_cs_manager]
 
@@ -57,7 +57,7 @@ kvmtest-pga-mgmt1 ansible_ssh_host=172.30.8.104 ansible_ssh_pass=password instan
 [xenserver_hosts]
 
 [kvm_hosts]
-kvmtest-pga-kvm1 ansible_ssh_host=172.30.8.97 ansible_ssh_pass=password instance_name=i-10-475-VM
+kvmtest-pga-kvm1 ansible_ssh_host=172.30.8.64 ansible_ssh_pass=password instance_name=i-46-567-VM
 
 [marvin_host]
 
@@ -70,7 +70,7 @@ secondary_storage_hosts
 172.30.8.11 ansible_ssh_host=172.30.8.11 ansible_ssh_pass=root123
 
 [primary_storage_hosts_iscsi]
-<IP_ADDRESS_HERE> ansible_ssh_host=<IP_ADDRESS_HERE> ansible_ssh_pass=root123
+172.30.8.11 ansible_ssh_host=172.30.8.11 ansible_ssh_pass=trillian1234
 
 [secondary_storage_hosts]
 172.30.8.11 ansible_ssh_host=172.30.8.11 ansible_ssh_pass=root123

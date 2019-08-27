@@ -26,9 +26,19 @@
 
 - name: Ensure CloudStack packages are installed
   yum:
-    name: "{{ cloudstack_agent_package}}*"
+    name: "{{ cloudstack_agent_package }}"
     state: present
     enablerepo: base
+  tags:
+    - kvm
+    - kvm-agent
+
+- name: Add class paths
+  lineinfile:
+    path: /etc/default/cloudstack-agent
+    regex: '^CLASSPATH'
+    line: CLASSPATH="/usr/share/cloudstack-agent/lib/*:/usr/share/cloudstack-agent/plugins/*:/etc/cloudstack/agent:/usr/share/cloudstack-common/scripts"
+    state: present
   tags:
     - kvm
     - kvm-agent

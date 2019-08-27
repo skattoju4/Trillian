@@ -21,8 +21,8 @@ def_mgmtsrv_username: "root"
 def_mgmtsrv_password: "password"
 def_pri_username: "root"
 def_pri_password: "root123"
-def_pri_username_iscsi: "root"
-def_pri_password_iscsi: "root123"
+def_pri_username_iscsi: "trillian1234"
+def_pri_password_iscsi: "trillian1234"
 def_sec_username: "root"
 def_sec_password: "root123"
 def_dbsrv_username: "root"
@@ -71,9 +71,11 @@ def_marvin_network: "sharedmgmt"
 def_management_network: "sharedmgmt"
 def_guest_public_network: "sharedpublic"
 def_management_vm_hypervisor: "VMware"
-def_build_zone: "vmwarezone"
+def_build_zone: "vmwzone"
 def_build_keyboard: "us"
 parent_vcenter_dc: "trillian_dc"
+parent_vcenter_cluster: "vmwcluster"
+parent_vcenter_vswitch: "cloud"
 repohost: "http://mirror.csclub.uwaterloo.ca"
 templatehost: "http://download.cloudstack.org" 
 def_env_timezone: "UTC"
@@ -92,7 +94,7 @@ vhdutil_url: http://download.cloud.com.s3.amazonaws.com/tools/vhd-util
 # Defaults for generate-config:
 mgmt: 1
 db: 0
-sec: 1
+sec: 0
 def_build_marvin: no
 wait_till_setup: no
 def_api_retries: 25
@@ -118,8 +120,8 @@ def_env_num_zones: 1
 def_env_use_sec_groups: yes
 def_env_prihost: "172.30.8.11"
 def_env_priprot: "nfs"
-def_env_prihost_iscsi: "<IP_ADDRESS_HERE>"
-def_env_iscsi_target: "<IQN_HERE>"
+def_env_prihost_iscsi: "172.30.8.11"
+def_env_iscsi_target: ""
 def_env_sechost: "172.30.8.11"
 def_env_pripath: "/secondary/trillian/primary"
 def_env_pripath_iscsi: "/iscsiroot/"
@@ -372,12 +374,12 @@ def_system_templates:
     vmware_systemvm_name: "systemvm-vmware-4.10"
     hyperv_url: "<HYPERV_URL_HERE>"
   cs411:
-    kvm_url: "http://download.cloudstack.org/systemvm/4.11/systemvmtemplate-4.11.2-kvm.qcow2.bz2"
-    kvm_systemvm_name: "systemvm-kvm-4.11.1"
+    kvm_url: "https://objects-qc.cloud.ca/v1/fa6a062f4d114a20a14e059297779a84/public/systemvmtemplate-4.11.2-kvm.qcow2.bz2"
+    kvm_systemvm_name: "systemvm-kvm-4.11.2"
     xs_url: "http://download.cloudstack.org/systemvm/4.11/systemvmtemplate-4.11.2-xen.vhd.bz2"
-    xs_systemvm_name: "systemvm-xenserver-4.11.1"
+    xs_systemvm_name: "systemvm-xenserver-4.11.2"
     vmware_url: "http://download.cloudstack.org/systemvm/4.11/systemvmtemplate-4.11.2-vmware.ova"
-    vmware_systemvm_name: "systemvm-vmware-4.11.1"
+    vmware_systemvm_name: "systemvm-vmware-4.11.2"
   cs4110:
     kvm_url: "<KVM_URL_HERE>"
     kvm_systemvm_name: "systemvm-kvm-4.11"
@@ -421,7 +423,7 @@ def_system_templates:
     vmware_url: "<VMWARE_URL_HERE>"
     vmware_systemvm_name: "systemvm-vmware-4.11.3"
   cs412:
-    kvm_url: "<KVM_URL_HERE>"
+    kvm_url: "http://download.cloudstack.org/systemvm/4.11/systemvmtemplate-4.11.3-kvm.qcow2.bz2"
     kvm_systemvm_name: "systemvm-kvm-4.11.3"
     xs_url: "<XS_URL_HERE>"
     xs_systemvm_name: "systemvm-xenserver-4.11.3"
@@ -636,7 +638,7 @@ def_marvin_tests_source: "github"
 def_marvin_tests_github_source: "https://github.com/apache/cloudstack"
 def_marvin_images_location: "http://<IP_ADDRESS_HERE>/marvin"
 def_openvm_images_location: "http://dl.openvm.eu/cloudstack/centos/x86_64/"
-def_fallback_marvin_test_repo: "http://packages.shapeblue.com/cloudstack/upstream/centos7/4.11/"
+def_fallback_marvin_test_repo: "http://packages.shapeblue.com/cloudstack/centos/7/4.11/"
 
 # Webhooks for integration
 def_use_webhooks: no
@@ -663,15 +665,15 @@ def_marvin_icon_url: "<ICON_URL_HERE>"
 # cloudmonkey keys:
 
 def_linux_cm_url:  https://github.com/apache/cloudstack-cloudmonkey/releases/download/6.0.0/cmk.linux.x86-64
-cm_apikey: "rqXMoPyL_ZnzpL6MTTpFsxkZ8cnewz3v-KT98RS3Lcl4eYg0xQFvDR7-r0apjKopncgmvNjqouev6KggYzMRIQ"
-cm_secretkey_enc: "+SJtNnyk9bGBWQ2mWA7Ko8FEh2HEGnIo85nMhbXU/6YI2a6lj1l3cTT0FwtV38eq+YT5qBO2Sj5X/WY7Qyd5G87BIXp0Cx4z4EO7hrLd+CdEQlG9TC1Tug=="
-cm_secretkey: "Ka60dys20TisCbc_VvnRVPES-03aeaphKPbnn40x0d_8gHbvDpxgM3AOU8ECPRAk8in-eoLdP-3Wk3AOF0Cv0w"
+cm_apikey: "qgBxZ8CwzwIDZAtTbiR7OLVkjWg-gBPHE1ZeAptHx3Qsh_FejUvz-ZnQZbIstnlldqepSPLRNmBfGPu_bVJBGQ"
+cm_secretkey_enc: "/gYaAcQCju20UH3vV1L6WAqzrhjbxOOzN2LfzN/SeOyUoCTKMcn9KfPdHGzqcK0a+tNgJ08fKMe11O6olimZDgeQo3jDvQ9pXBwJwhIbh1TQS+7ZMlD/AVfmaRo3ypw6"
+cm_secretkey: "Z7kDZUW5GV8mUSvJZYPZFb2tAaJqtR_06lR91Q1nh0Lj5I2Uw4Q4lVbhnzId2prfXKLOT_1aj2mjRsc9WlMttQ"
 
 # global variables
 global_settings:
   all:
     - {name: "vmware.create.full.clone", value: "false", condition: "all"}
-    - {name: "secstorage.allowed.internal.sites", value: "<IP_ADDRESS_HERE>/24", condition: "all"}
+    - {name: "secstorage.allowed.internal.sites", value: "172.30.8.0/24", condition: "all"}
     - {name: "cpu.overprovisioning.factor", value: "2", condition: "all"}
     - {name: "cluster.cpu.allocated.capacity.disablethreshold", value: "0.95", condition: "all"}
     - {name: "cluster.memory.allocated.capacity.disablethreshold", value: "0.95", condition: "all"}
