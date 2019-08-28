@@ -7,20 +7,28 @@
   delegate_to: localhost
   register: portgroup_facts
 
-- debug: msg='{{ portgroup_facts }}'
+- debug: msg="{{ portgroup_facts }}"
+
+#- name: 'Copy facts to disk'
+#  copy:
+#    content: '{{ item.vlan_id }}'
+#    dest: '/tmp/{{ item.portgroup }}.yml'
+#  delegate_to: localhost
+#  with_items: "{{ portgroup_facts['hosts_portgroup_facts'][parent_esxi_host] }}"
 
 - name: 'Set promiscuous mode on portgroups'
   vmware_portgroup:
     hostname: '{{ parent_vcenter_hostname }}'
     username: '{{ parent_vcenter_username }}'
     password: '{{ parent_vcenter_password }}'
+    cluster_name:  '{{ parent_vcenter_cluster }}'
     switch_name:  '{{ item.vswitch }}'
     portgroup_name: '{{ item.portgroup}}'
-    vlan_id: '{{ item.vlan_id }}'
+    vlan_id: '{{ item.vlan_id | int }}'
     network_policy:
       promiscuous_mode: True
   delegate_to: localhost
-  with_items: '{{ portgroup_facts }}'
+  with_items: "{{ portgroup_facts['hosts_portgroup_facts'][parent_esxi_host] }}"
   register: result
 
 - debug: msg='{{ result }}'
